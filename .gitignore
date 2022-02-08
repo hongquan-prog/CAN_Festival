@@ -50,3 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Keil object
+stm32f407/MDK-ARM/CAN_Festival
+stm32f407/MDK-ARM/DebugConfig
+stm32f407/MDK-ARM/RTE
+stm32f407/MDK-ARM/CAN_Festival.uvguix.16690
+
+# vscode
+.vscode
