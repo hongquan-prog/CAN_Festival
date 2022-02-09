@@ -63,17 +63,17 @@ static void CAN1_Init(void)
 {
 	CAN_FilterTypeDef sFilterConfig;
 
-	sFilterConfig.FilterBank=0;
-	sFilterConfig.SlaveStartFilterBank=0;
-	sFilterConfig.FilterFIFOAssignment=CAN_FILTER_FIFO0;
+	sFilterConfig.FilterBank = 0;
+	sFilterConfig.SlaveStartFilterBank = 14;
+	sFilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
 	sFilterConfig.FilterIdHigh = 0;
 	sFilterConfig.FilterIdLow = 0;
 	sFilterConfig.FilterMaskIdHigh = 0;
 	sFilterConfig.FilterMaskIdLow = 0;
-	sFilterConfig.FilterMode=CAN_FILTERMODE_IDMASK;
-	sFilterConfig.FilterScale=CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterActivation=ENABLE;
-	HAL_CAN_ConfigFilter(&hcan1,&sFilterConfig);
+	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+	sFilterConfig.FilterActivation = ENABLE;
+	HAL_CAN_ConfigFilter(&hcan1, &sFilterConfig);
 
 	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_ERROR);
