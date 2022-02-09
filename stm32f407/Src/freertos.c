@@ -52,7 +52,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-osEventFlagsId_t gCANopenEventGroup;
+
 /* USER CODE END Variables */
 /* Definitions for CANTimerTask */
 osThreadId_t CANTimerTaskHandle;
@@ -95,6 +95,11 @@ osSemaphoreId_t CANMailSemHandle;
 const osSemaphoreAttr_t CANMailSem_attributes = {
   .name = "CANMailSem"
 };
+/* Definitions for CANEventGroup */
+osEventFlagsId_t CANEventGroupHandle;
+const osEventFlagsAttr_t CANEventGroup_attributes = {
+  .name = "CANEventGroup"
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -116,7 +121,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-  gCANopenEventGroup = osEventFlagsNew(NULL);     
+      
   /* USER CODE END Init */
   /* Create the mutex(es) */
   /* creation of CANTimerMutex */
@@ -163,6 +168,9 @@ void MX_FREERTOS_Init(void) {
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
+  /* creation of CANEventGroup */
+  CANEventGroupHandle = osEventFlagsNew(&CANEventGroup_attributes);
+
   /* USER CODE BEGIN RTOS_EVENTS */
   /* add events, ... */
   /* USER CODE END RTOS_EVENTS */
@@ -193,7 +201,7 @@ void StartMainTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osEventFlagsWait(gCANopenEventGroup, CANOPEN_TIMER_EVENT_BIT, osFlagsWaitAny, osWaitForever);
+    osEventFlagsWait(CANEventGroupHandle, CANOPEN_TIMER_EVENT_BIT, osFlagsWaitAny, osWaitForever);
 		canTimerCallback();
   }
   /* USER CODE END StartMainTask */
@@ -225,7 +233,7 @@ void CANSendTaskEntry(void *argument)
 		tx_msg.TransmitGlobalTime = DISABLE;
 		
 		osSemaphoreAcquire(CANMailSemHandle, osWaitForever);
-		HAL_CAN_AddTxMessage(&hcan1, &tx_msg,msg.data, &TxMailbox);
+		HAL_CAN_AddTxMessage(&hcan1, &tx_msg, msg.data, &TxMailbox);
   }
   /* USER CODE END CANSendTaskEntry */
 }
@@ -244,7 +252,7 @@ void CANRecvEntry(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osMessageQueueGet(CANRecvQueueHandle,&msg,NULL,osWaitForever);
+    osMessageQueueGet(CANRecvQueueHandle, &msg, NULL, osWaitForever);
 		canDispatch(&TestSlave_Data, &msg);
   }
   /* USER CODE END CANRecvEntry */

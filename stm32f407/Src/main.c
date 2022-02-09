@@ -49,7 +49,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern osEventFlagsId_t gCANopenEventGroup;
+extern osEventFlagsId_t CANEventGroupHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -183,7 +183,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
   /* USER CODE BEGIN Callback 1 */
 	else if(htim->Instance == TIM7){
-		osEventFlagsSet(gCANopenEventGroup,CANOPEN_TIMER_EVENT_BIT);
+		osEventFlagsSet(CANEventGroupHandle,CANOPEN_TIMER_EVENT_BIT);
 	}
   /* USER CODE END Callback 1 */
 }
