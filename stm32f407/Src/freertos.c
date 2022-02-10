@@ -234,6 +234,12 @@ void CANSendTaskEntry(void *argument)
 		
 		osSemaphoreAcquire(CANMailSemHandle, osWaitForever);
 		HAL_CAN_AddTxMessage(&hcan1, &tx_msg, msg.data, &TxMailbox);
+
+    /* test */
+		if((tx_msg.StdId & 0x700) == 0x700)
+		{
+			printf("Heartbeat\n");
+		}
   }
   /* USER CODE END CANSendTaskEntry */
 }

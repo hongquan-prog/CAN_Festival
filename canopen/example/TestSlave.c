@@ -606,34 +606,33 @@ const indextable TestSlave_objdict[] =
   { (subindex*)TestSlave_Index200C,sizeof(TestSlave_Index200C)/sizeof(TestSlave_Index200C[0]), 0x200C},
 };
 
-const indextable * TestSlave_scanIndexOD (CO_Data *d, UNS16 wIndex, UNS32 * errorCode, ODCallback_t **callbacks)
+const indextable * TestSlave_scanIndexOD (CO_Data *d, UNS16 wIndex, UNS32 * errorCode)
 {
 	int i;
-	*callbacks = NULL;
 	switch(wIndex){
 		case 0x1000: i = 0;break;
 		case 0x1001: i = 1;break;
-		case 0x1003: i = 2;*callbacks = TestSlave_Index1003_callbacks; break;
-		case 0x1005: i = 3;*callbacks = TestSlave_Index1005_callbacks; break;
-		case 0x1006: i = 4;*callbacks = TestSlave_Index1006_callbacks; break;
-		case 0x1010: i = 5;*callbacks = TestSlave_Index1010_callbacks; break;
-		case 0x1011: i = 6;*callbacks = TestSlave_Index1011_callbacks; break;
+		case 0x1003: i = 2;break;
+		case 0x1005: i = 3;break;
+		case 0x1006: i = 4;break;
+		case 0x1010: i = 5;break;
+		case 0x1011: i = 6;break;
 		case 0x1014: i = 7;break;
-		case 0x1017: i = 8;*callbacks = TestSlave_Index1017_callbacks; break;
+		case 0x1017: i = 8;break;
 		case 0x1018: i = 9;break;
 		case 0x1200: i = 10;break;
-		case 0x1800: i = 11;*callbacks = TestSlave_Index1800_callbacks; break;
-		case 0x1801: i = 12;*callbacks = TestSlave_Index1801_callbacks; break;
-		case 0x1802: i = 13;*callbacks = TestSlave_Index1802_callbacks; break;
-		case 0x1803: i = 14;*callbacks = TestSlave_Index1803_callbacks; break;
-		case 0x1804: i = 15;*callbacks = TestSlave_Index1804_callbacks; break;
+		case 0x1800: i = 11;break;
+		case 0x1801: i = 12;break;
+		case 0x1802: i = 13;break;
+		case 0x1803: i = 14;break;
+		case 0x1804: i = 15;break;
 		case 0x1A00: i = 16;break;
 		case 0x1A01: i = 17;break;
 		case 0x1A02: i = 18;break;
 		case 0x1A03: i = 19;break;
 		case 0x1A04: i = 20;break;
-		case 0x1F50: i = 21;*callbacks = TestSlave_Index1F50_callbacks; break;
-		case 0x1F51: i = 22;*callbacks = TestSlave_Index1F51_callbacks;break;
+		case 0x1F50: i = 21;break;
+		case 0x1F51: i = 22;break;
 		case 0x1F52: i = 23;break;
 		case 0x2000: i = 24;break;
 		case 0x2001: i = 25;break;

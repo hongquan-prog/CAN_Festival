@@ -64,7 +64,7 @@ const osThreadAttr_t CANTimerTask_attributes = {
 osThreadId_t CANSendTaskHandle;
 const osThreadAttr_t CANSendTask_attributes = {
   .name = "CANSendTask",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityLow,
   .stack_size = 128 * 4
 };
 /* Definitions for CANRecvTask */
@@ -109,7 +109,7 @@ void canFestivalInit(void);
 
 void StartMainTask(void *argument);
 void CANSendTaskEntry(void *argument);
-void CANRecvEntry(void *argument);
+void CANRecvTaskEntry(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -161,7 +161,7 @@ void MX_FREERTOS_Init(void) {
   CANSendTaskHandle = osThreadNew(CANSendTaskEntry, NULL, &CANSendTask_attributes);
 
   /* creation of CANRecvTask */
-  CANRecvTaskHandle = osThreadNew(CANRecvEntry, NULL, &CANRecvTask_attributes);
+  CANRecvTaskHandle = osThreadNew(CANRecvTaskEntry, NULL, &CANRecvTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -178,10 +178,10 @@ void MX_FREERTOS_Init(void) {
 
 /* USER CODE BEGIN Header_StartMainTask */
 /**
-* @brief Function implementing the CANTimerTask thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief  Function implementing the CANTimerTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_StartMainTask */
 void StartMainTask(void *argument)
 {
@@ -232,9 +232,9 @@ void CANSendTaskEntry(void *argument)
 		tx_msg.TransmitGlobalTime = DISABLE;
 		
 		osSemaphoreAcquire(CANMailSemHandle, osWaitForever);
-		HAL_CAN_AddTxMessage(&hcan1, &tx_msg, msg.data, &TxMailbox);
-
-    /* test */
+		HAL_CAN_AddTxMessage(&hcan, &tx_msg, msg.data, &TxMailbox);
+		
+		/* test */
 		if((tx_msg.StdId & 0x700) == 0x700)
 		{
 			printf("Heartbeat\n");
@@ -243,16 +243,16 @@ void CANSendTaskEntry(void *argument)
   /* USER CODE END CANSendTaskEntry */
 }
 
-/* USER CODE BEGIN Header_CANRecvEntry */
+/* USER CODE BEGIN Header_CANRecvTaskEntry */
 /**
 * @brief Function implementing the CANRecvTask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_CANRecvEntry */
-void CANRecvEntry(void *argument)
+/* USER CODE END Header_CANRecvTaskEntry */
+void CANRecvTaskEntry(void *argument)
 {
-  /* USER CODE BEGIN CANRecvEntry */
+  /* USER CODE BEGIN CANRecvTaskEntry */
   Message msg;
   /* Infinite loop */
   for(;;)
@@ -260,7 +260,7 @@ void CANRecvEntry(void *argument)
     osMessageQueueGet(CANRecvQueueHandle, &msg, NULL, osWaitForever);
 		canDispatch(&TestSlave_Data, &msg);
   }
-  /* USER CODE END CANRecvEntry */
+  /* USER CODE END CANRecvTaskEntry */
 }
 
 /* Private application code --------------------------------------------------*/

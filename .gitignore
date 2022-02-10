@@ -52,6 +52,10 @@ Mkfile.old
 dkms.conf
 
 # Keil object
+stm32f103/MDK-ARM/CAN_Festival
+stm32f103/MDK-ARM/DebugConfig
+stm32f103/MDK-ARM/RTE
+stm32f103/MDK-ARM/CAN_Festival.uvguix.16690
 stm32f407/MDK-ARM/CAN_Festival
 stm32f407/MDK-ARM/DebugConfig
 stm32f407/MDK-ARM/RTE
