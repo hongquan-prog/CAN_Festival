@@ -8,7 +8,6 @@ static TIMEVAL last_counter_val = 0;
 static TIMEVAL elapsed_time = 0;
 
 extern osMessageQueueId_t CANSendQueueHandle;
-extern osMutexId_t CANTimerMutexHandle;
 
 //Set the timer for the next alarm.
 static void setTimerFunc(TIMEVAL value)
@@ -34,16 +33,6 @@ static TIMEVAL getElapsedTimeFunc(void)
 	TIMEVAL elapsed = timer_cnt - last_counter_val + elapsed_time;
 	
 	return elapsed;
-}
-
-static unsigned char canTimerEnterMutexFunc()
-{
-	return (osOK == osMutexWait(CANTimerMutexHandle, osWaitForever));
-}
-
-static unsigned char canTimerLeaveMutexFunc()
-{
-	return (osOK == osMutexRelease(CANTimerMutexHandle));
 }
 
 void canTimerCallbackFunc(void)
@@ -86,8 +75,6 @@ void canFestivalInit(void)
 {
   canSend = canSendFunc;
 	setTimer = setTimerFunc;
-	canTimerEnterMutex = canTimerEnterMutexFunc;
-	canTimerLeaveMutex = canTimerLeaveMutexFunc;
 	getElapsedTime = getElapsedTimeFunc;
 	canTimerCallback = canTimerCallbackFunc;
 	

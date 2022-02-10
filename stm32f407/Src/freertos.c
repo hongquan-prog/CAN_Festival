@@ -85,11 +85,6 @@ osMessageQueueId_t CANRecvQueueHandle;
 const osMessageQueueAttr_t CANRecvQueue_attributes = {
   .name = "CANRecvQueue"
 };
-/* Definitions for CANTimerMutex */
-osMutexId_t CANTimerMutexHandle;
-const osMutexAttr_t CANTimerMutex_attributes = {
-  .name = "CANTimerMutex"
-};
 /* Definitions for CANMailSem */
 osSemaphoreId_t CANMailSemHandle;
 const osSemaphoreAttr_t CANMailSem_attributes = {
@@ -123,9 +118,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
       
   /* USER CODE END Init */
-  /* Create the mutex(es) */
-  /* creation of CANTimerMutex */
-  CANTimerMutexHandle = osMutexNew(&CANTimerMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -168,6 +160,7 @@ void MX_FREERTOS_Init(void) {
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
+  /* Create the event(s) */
   /* creation of CANEventGroup */
   CANEventGroupHandle = osEventFlagsNew(&CANEventGroup_attributes);
 
